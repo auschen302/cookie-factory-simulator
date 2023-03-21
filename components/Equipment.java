@@ -1,6 +1,7 @@
 package components;
 
 import java.util.LinkedList;
+import org.json.simple.JSONObject;
 
 interface Equipment {
 
@@ -8,14 +9,21 @@ interface Equipment {
 
     void addDependency(Equipment dependency);
     void setDependencies(LinkedList<Equipment> newDependencies);
+    void addProvider(Equipment provider);
+    void setProviders(LinkedList<Equipment> newProviders);
+    String getName();
+    boolean hasResources();
+    boolean isAlarming();
+    int isOverloaded();
     String getAlarmMessage();
     int getRate();
     int getTemp();
-    //void changeBehavior(ChangeBehavior newBehavior);
-    LinkedList<Equipment> update(boolean fail);
-    //void updateSuccess();
-    //LinkedList<Equipment> updateFail();
-    LinkedList<Equipment> fail(boolean overloaded);
+    LinkedList<Equipment> getNeighbors();
+    //LinkedList<Equipment> update(boolean fail);
+    //LinkedList<Equipment> fail(boolean overloaded);
+    int update(boolean fail);
+    int fail(int errorCode);
     LinkedList<Equipment> fixRootCause();
     LinkedList<Equipment> fix();
+    JSONObject exportAsJSON();
 }

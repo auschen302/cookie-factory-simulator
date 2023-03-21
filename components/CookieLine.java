@@ -1,7 +1,6 @@
 package components;
 
 import java.util.Scanner;
-import java.lang.Thread.State;
 import java.util.LinkedList;
 
 enum status {
@@ -173,8 +172,9 @@ public class CookieLine {
         loop: while(true){
         System.out.println("Enter command: ");
         String command = input.nextLine();
-        switch(command) {
+        first: switch(command) {
             case "status":
+                line.displayState();
                 break;
             case "next":
                 line.updateAll();
@@ -187,6 +187,10 @@ public class CookieLine {
             default:
                 String[] commands = command.split(" ");
                 Equipment target;
+                if (commands.length < 2) {
+                    System.out.println("Command not recognized");
+                    break first;
+                }
                 switch (commands[1]) {
                     case "conveyor1":
                         target = line.conveyor1;
@@ -216,8 +220,8 @@ public class CookieLine {
                         target = line.boxSealer;
                         break;
                     default:
-                        target = null;
-                        break;
+                        System.out.println("Command not recognized");
+                        break first;
                 }
                 switch (commands[0]) {
                     case "fix":
@@ -230,12 +234,12 @@ public class CookieLine {
                         line.errorCode = 1;
                         break;
                     default: 
-                        throw new Error("Command not recognized");
+                        System.out.println("Command not recognized");
+                        break first;
                 }
                 line.beginFailOrFix(target.getNeighbors());
                 break;
             }
-            line.displayState();   
         }
         input.close();
     }

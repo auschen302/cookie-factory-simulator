@@ -1,7 +1,6 @@
 package components;
 
 import java.util.Random;
-import java.util.jar.JarEntry;
 
 import org.json.simple.JSONObject;
 
